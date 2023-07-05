@@ -110,7 +110,7 @@ const Header = () => {
               ))}
               {isReadyForInstall && 
               <button className="addTOCart__btn" style={{height: "40px"}} onClick={downloadApp}>
-                <h6>Instalar App</h6>
+                <h6>Instalar App ⬇️</h6>
               </button>}
             </div>
           </div>

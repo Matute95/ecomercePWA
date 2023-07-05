@@ -24,22 +24,21 @@ const ProductCard = (props) => {
 
   return (
     <div className="product__item">
-      <div className="product__img">
-        <img src={image01} alt="product-img" className="w-50" />
-      </div>
-
-      <div className="product__content">
-        <h5>
-          <Link to={`/foods/${id}`}>{title}</Link>
-        </h5>
-        <div className=" d-flex align-items-center justify-content-between ">
-          <span className="product__price">{price} Bs</span>
-          <button className="addTOCart__btn" onClick={addToCart}>
-            Agregar al carrito
-          </button>
-        </div>
-      </div>
+  <div className="product__img">
+    <img src={image01} alt="product-img" className="w-50" />
+  </div>
+  <div className="product__content d-flex flex-column align-items-center">
+    <h5>
+      <Link to={`/foods/${id}`}>{title}</Link>
+    </h5>
+    <span className="product__price">{price} Bs</span>
+    <div>
+      <button className="addTOCart__btn" onClick={addToCart}>
+        Agregar al carrito
+      </button>
     </div>
+  </div>
+</div>
   );
 };
 

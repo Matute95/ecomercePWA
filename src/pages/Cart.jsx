@@ -46,12 +46,16 @@ const Cart = () => {
                 </h6>
                 <p>Los impuestos y el envío se calcularán al finalizar la compra</p>
                 <div className="cart__page-btn">
+                <Link to="/foods">
                   <button className="addTOCart__btn me-4">
-                    <Link to="/foods">Continuar comprando</Link>
+                    Continuar comprando
                   </button>
-                  <button className="addTOCart__btn">
-                    <Link to="/checkout">Ir a pagar</Link>
+                </Link>
+                  <Link to="/checkout">
+                  <button className="addTOCart__btn">   
+                  Ir a pagar
                   </button>
+                  </Link>
                 </div>
               </div>
             </Col>

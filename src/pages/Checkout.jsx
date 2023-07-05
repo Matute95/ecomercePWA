@@ -13,7 +13,8 @@ const Checkout = () => {
   const [enterCVV, setEnterCVV] = useState("");
   const [enterAdress, setEnterAdress] = useState("");
   const [enterDetail, setDetail] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
   const shippingInfo = [];
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   const shippingCost = 15;
@@ -22,6 +23,11 @@ const Checkout = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setPaymentSuccess(true);
+    }, 3000);
     const userShippingAddress = {
       card: enterCard,
       exp: enterExp,
@@ -39,83 +45,92 @@ const Checkout = () => {
     <Helmet title="Checkout">
       <CommonSection title="Comprar" />
       <section>
-        <Container>
-          <Row>
-            <Col lg="8" md="6">
-              <h6 className="mb-4">Datos</h6>
-              <form className="checkout__form" onSubmit={submitHandler}>
-                <div className="form__group">
-                  <input
-                    type="number"
-                    placeholder="Numero de tarjeta"
-                    required
-                    onChange={(e) => setEnterCard(e.target.value)}
-                  />
-                </div>
+    {!paymentSuccess ? (
+      <Container>
+      <Row>
+        <Col lg="8" md="6">
+          <h6 className="mb-4">Datos</h6>
+          <form className="checkout__form" onSubmit={submitHandler}>
+            <div className="form__group">
+              <input
+                type="number"
+                placeholder="Numero de tarjeta"
+                required
+                onChange={(e) => setEnterCard(e.target.value)}
+              />
+            </div>
 
-                <div className="form__group">
-                  <input
-                    type="text"
-                    placeholder="Expiracion (ej: 12/24)"
-                    required
-                    onChange={(e) => setEnterExp(e.target.value)}
-                  />
-                </div>
-                <div className="form__group">
-                  <input
-                    type="number"
-                    placeholder="CVV"
-                    required
-                    onChange={(e) => setEnterCVV(e.target.value)}
-                  />
-                </div>
-                <div className="form__group">
-                  <input
-                    type="text"
-                    placeholder="Direccion"
-                    required
-                    onChange={(e) => setEnterAdress(e.target.value)}
-                  />
-                </div>
-                <div className="form__group">
-                  <input
-                    type="text"
-                    placeholder="Detalle adicional"
-                    required
-                    onChange={(e) => setDetail(e.target.value)}
-                  />
-                </div>
-                <div className="form__group">
-                  <input
-                    type="number"
-                    placeholder="Telefono"
-                    required
-                    onChange={(e) => setEnterNumber(e.target.value)}
-                  />
-                </div>
-                <button type="submit" className="addTOCart__btn">
-                  Pagar
-                </button>
-              </form>
-            </Col>
+            <div className="form__group">
+              <input
+                type="text"
+                placeholder="Expiracion (ej: 12/24)"
+                required
+                onChange={(e) => setEnterExp(e.target.value)}
+              />
+            </div>
+            <div className="form__group">
+              <input
+                type="number"
+                placeholder="CVV"
+                required
+                onChange={(e) => setEnterCVV(e.target.value)}
+              />
+            </div>
+            <div className="form__group">
+              <input
+                type="text"
+                placeholder="Direccion"
+                required
+                onChange={(e) => setEnterAdress(e.target.value)}
+              />
+            </div>
+            <div className="form__group">
+              <input
+                type="text"
+                placeholder="Detalle adicional"
+                required
+                onChange={(e) => setDetail(e.target.value)}
+              />
+            </div>
+            <div className="form__group">
+              <input
+                type="number"
+                placeholder="Telefono"
+                required
+                onChange={(e) => setEnterNumber(e.target.value)}
+              />
+            </div>
+            <button type="submit" className="addTOCart__btn" disabled={isLoading}>
+            {isLoading ? 'Pagando...' : 'Pagar'}
+            </button>
+          </form>
+        </Col>
 
-            <Col lg="4" md="6">
-              <div className="checkout__bill">
-                <h6 className="d-flex align-items-center justify-content-between mb-3">
-                  Subtotal: <span>{cartTotalAmount} Bs</span>
-                </h6>
-                <h6 className="d-flex align-items-center justify-content-between mb-3">
-                  Envio: <span>{shippingCost} Bs</span>
-                </h6>
-                <div className="checkout__total">
-                  <h5 className="d-flex align-items-center justify-content-between">
-                    Total: <span>{totalAmount} Bs</span>
-                  </h5>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
+        <Col lg="4" md="6">
+          <div className="checkout__bill">
+            <h6 className="d-flex align-items-center justify-content-between mb-3">
+              Subtotal: <span>{cartTotalAmount} Bs</span>
+            </h6>
+            <h6 className="d-flex align-items-center justify-content-between mb-3">
+              Envio: <span>{shippingCost} Bs</span>
+            </h6>
+            <div className="checkout__total">
+              <h5 className="d-flex align-items-center justify-content-between">
+                Total: <span>{totalAmount} Bs</span>
+              </h5>
+            </div>
+          </div>
+        </Col>
+      </Row>
+      </Container>
+    ) : (
+      <Container>
+        <div className="checkout__success">
+      <h2>¡Compra exitosa! ✔️</h2>
+      <p>Los productos seran enviadas a la direccion que especificó</p>
+      </div>
+      </Container>
+    )}
       </section>
     </Helmet>
   );
